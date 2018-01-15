@@ -3,20 +3,20 @@
 	padding:2px;
 	positon:absolute;
 	font-size:20;
-	border:solid 1px black;
 	padding:5px;}
 
 #devices {position:absolute;
 	width:15%;
 	height:95%;
-	border:solid 1px gray;
-	border-top:0;
+	border-right:solid 1px gray;
 	text-align:center;}
 
 #center {position:absolute;
-	left:15.75%;
-	height:87.5%;
-	width:68.5%;
+	left:15%;
+	right:15%;
+	height:95%;
+	margin-left:10px;
+	margin-right:10px;
 	border:solid 1px black;}
 
 #respondent {position:absolute;
@@ -24,17 +24,15 @@
 	height:95%;
 	left:85%;
 	margin-left:-9.5px;
-	border:solid 1px gray;
-	border-top:0;
-		text-align:center;}
+	border-left:solid 1px gray;
+	text-align:center;}
 
-#footer {position:absolute;
-	top:95%;
-	width:68.5%;
-	margin-top:-8px;
-	left:15.75%;
-	border-top:solid 1px gray;
-	border-bottom:solid 1px black;}
+.footer {position:fixed;
+		right:0;
+		bottom:0;
+		left:0;
+		background-color:#efefef;
+		text-align:center;}
 
 .navbar a {padding: 14px 16px;
 	text-decoration: none;
