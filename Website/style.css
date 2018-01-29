@@ -1,27 +1,45 @@
 
-#head {background:lightblue;
+#head {background:#9a1515;
 	padding:2px;
-	positon:absolute;
-	font-size:20;
+	positon:absolute; 
+	padding:5px;
+	height:60px;}
+
+body {font-family: Arial, Constance;}
+
+#out {float:right;
+	background:white;
+	margin-top:35px;}
+		
+h3 {float:right;
+	color:white;
+	padding-right:20px;}
+	
+#logo {float:left;
 	padding:5px;}
+
+#map {font-size:25px;
+	color:white;
+	float:left;}
 
 #devices {position:absolute;
 	width:15%;
-	height:95%;
+	height:90%;
+	background:darkgrey;
 	border-right:solid 1px gray;
 	text-align:center;}
 
 #center {position:absolute;
 	left:15%;
 	right:15%;
-	height:95%;
-	margin-left:10px;
+	height:90%;
+	margin-left:9px;
 	margin-right:10px;
 	border:solid 1px black;}
 
 #respondent {position:absolute;
 	width:15%;
-	height:95%;
+	height:90%;
 	left:85%;
 	margin-left:-9.5px;
 	border-left:solid 1px gray;
@@ -40,19 +58,21 @@
 
 a:hover {color:blue;}
 		
-.dropbtn {padding: 16px;
-	font-size: 15px;
-	border: none;
-	cursor: pointer;}
+.dropbtn {position:relative;
+		padding: 12px;
+		font-size:12px;
+		border: none;
+		cursor: pointer;}
 		
-.dropbtn:hover{background-color: #3e8e41;}
+.dropbtn:hover{background-color: #ef2e2e;
+			color:white;}
 	
 .dropdown {position: relative;
 	display: inline-block;}
 		
 .dropdown-content {display: none;
 		position: absolute;
-		background-color: #f9f9f9;
+		background-color: #bcb8b8;
 		min-width: 120px;
 		overflow: auto;
 		box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
@@ -63,6 +83,6 @@ a:hover {color:blue;}
 		text-decoration: none;
 		display: block;}
 		
-.dropdown a:hover {background-color: #f1f1f1}
+.dropdown a:hover {background-color:white;}
 		
 .show {display:block;}
