@@ -1,52 +1,98 @@
 package com.dmc.androidapp.rescueapp;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-/**
- * An example full-screen activity that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
- */
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
+import java.io.IOException;
+
 public class LoginActivity extends AppCompatActivity {
 
-    EditText username;
-    EditText password;
+    EditText usernameTextField;
+    EditText passwordTextField;
+    private TextView resultTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        username = findViewById(R.id.editText);
-        password = findViewById(R.id.editText2);
-
+        usernameTextField = findViewById(R.id.editText);
+        passwordTextField = findViewById(R.id.editText2);
+        resultTextView = findViewById(R.id.textView2);
+        
         findViewById(R.id.button).setOnClickListener(
                 new View.OnClickListener()
                 {
                     public void onClick(View view)
                     {
-                        if(validate()){
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            finish();
-                        }
+                        new Login().execute(usernameTextField.getText().toString(),
+                                                passwordTextField.getText().toString());
                     }
                 }
         );
     }
 
-    private boolean validate(){
-        if(username.getText().toString().equals(GlobalVar.username) &&password.getText().toString().equals(GlobalVar.password)){
-            return true;
+    private class Login extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            final StringBuilder builder = new StringBuilder();
+            try {
+                Document doc = Jsoup.connect("http://192.168.8.100/thesis/conn/")
+                        .data("user", params[0])
+                        .data("pass", params[1])
+                        .userAgent("Mozilla")
+                        .post();
+                builder.append(doc.getElementsByTag("body").text());
+                return builder.toString();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return "{\"message\" : \"error\" , \"error\" : \"" + e.getMessage() + "\"}";
+
+            }
         }
-        else{
-            return false;
+
+        @Override
+        protected void onPostExecute(String result) {
+            try {
+                GlobalVar.jsonObj = new JSONObject(result.toString());
+                if(GlobalVar.jsonObj.getString("message").equals("error")){
+                    GlobalVar.message = GlobalVar.jsonObj.getString("message");
+                    GlobalVar.error =  GlobalVar.jsonObj.getString("error");
+                }
+                else if(GlobalVar.jsonObj.getString("message").equals("success")){
+                    GlobalVar.message = GlobalVar.jsonObj.getString("message");
+                    GlobalVar.rescue_team_name = GlobalVar.jsonObj.getString("rescue_team_name");
+                    GlobalVar.rescue_team_current_task = GlobalVar.jsonObj.getString("rescue_team_current_task");
+                }
+                else{
+                    GlobalVar.message = "error";
+                    GlobalVar.error = "No json received.";
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                GlobalVar.message = "error";
+                GlobalVar.error = e.getMessage();
+            }
+            super.onPostExecute(result);
+            if(GlobalVar.message.equals("error")){
+                resultTextView.setText(GlobalVar.error);
+            }
+            else if(GlobalVar.message.equals("success")) {
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
         }
     }
-
 }

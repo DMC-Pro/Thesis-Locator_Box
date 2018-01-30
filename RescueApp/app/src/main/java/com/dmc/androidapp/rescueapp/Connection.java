@@ -1,10 +1,12 @@
 package com.dmc.androidapp.rescueapp;
 
-import java.io.BufferedInputStream;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
+import java.lang.Runnable;
 
 /**
  * Created by DMC Pro on 19/01/2018.
@@ -12,17 +14,9 @@ import java.net.URL;
 
 public class Connection {
     String data;
-    public String connect() throws MalformedURLException {
-        //URL url = new URL("http://localhost ");
-        //HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-        //try {
-        //    InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-        //    readStream(in);
-        //} finally {
-        //    urlConnection.disconnect();
-        //}
-        return "nothing";
+    public static String connect() throws IOException {
+        Document doc = Jsoup.connect("http://192.168.8.101/thesis/conn/:8080").get();
+        return doc.getElementsByTag("body").text();
     }
-
-
+    //end of class
 }
