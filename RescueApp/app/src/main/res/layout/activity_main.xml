@@ -6,62 +6,82 @@
     android:layout_height="match_parent"
     tools:context="com.dmc.androidapp.rescueapp.MainActivity">
 
-
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"
-        android:background="@color/colorPrimaryDark"
+        style="@style/HeaderBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        style="@style/HeaderBar"
-        app:titleTextColor="@color/colorWhite"
-        app:theme="@style/ActionBarThemeOverlay"
-        app:popupTheme="@style/ActionBarPopupThemeOverlay"
+        android:background="@color/colorPrimaryDark"
         android:elevation="4dp"
-        >
+        app:popupTheme="@style/ActionBarPopupThemeOverlay"
+        app:theme="@style/ActionBarThemeOverlay"
+        app:titleTextColor="@color/colorWhite">
 
     </android.support.v7.widget.Toolbar>
 
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="800px"
+        android:layout_height="match_parent"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:context="com.dmc.androidapp.rescueapp.LoginActivity" />
-
-    <EditText
-        android:id="@+id/editText4"
-        android:layout_width="150dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="Latitude"
-        android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
-
-    <EditText
-        android:id="@+id/editText5"
-        android:layout_width="150dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="Longitude"
-        android:inputType="textPersonName"
-        app:layout_constraintStart_toEndOf="@+id/editText4"
-        app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Update"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/my_toolbar"
+        app:layout_constraintVertical_bias="1.0">
+
+        <EditText
+            android:id="@+id/editText4"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_alignBaseline="@+id/editText5"
+            android:layout_alignBottom="@+id/editText5"
+            android:layout_alignParentStart="true"
+            android:ems="10"
+            android:hint="Latitude"
+            android:inputType="textPersonName"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/editText5"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="60dp"
+            android:layout_toEndOf="@+id/editText4"
+            android:ems="10"
+            android:hint="Longitude"
+            android:inputType="textPersonName" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/editText5"
+            android:layout_alignParentEnd="true"
+            android:text="Update"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="800px"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:context="com.dmc.androidapp.rescueapp.LoginActivity"
+            tools:layout_editor_absoluteX="8dp" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editText5"
+            android:layout_centerHorizontal="true"
+            android:text="" />
+    </RelativeLayout>
+
 
 </android.support.constraint.ConstraintLayout>

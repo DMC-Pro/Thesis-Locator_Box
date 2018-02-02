@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -21,14 +22,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private Toolbar mTopToolbar;
 
-    EditText latitude;
-    EditText longitude;
+    EditText latitudeText;
+    EditText longitudeText;
+    TextView resultText;
+
+    Marker rescuer;
+    Marker device;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        latitude = findViewById(R.id.editText4);
-        longitude = findViewById(R.id.editText5);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -41,14 +44,31 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mTopToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(mTopToolbar);
 
+        latitudeText = findViewById(R.id.editText4);
+        longitudeText = findViewById(R.id.editText5);
+        resultText =findViewById(R.id.textView5);
+
         findViewById(R.id.button3).setOnClickListener(
                 new View.OnClickListener()
                 {
                     public void onClick(View view)
                     {
-                        GlobalVar.loclat = Double.parseDouble(latitude.getText().toString());
-                        GlobalVar.loclong = Double.parseDouble(longitude.getText().toString());
-                        changeMarker();
+                        try {
+                            GlobalVar.loclat = Double.parseDouble(latitudeText.getText().toString());
+                            GlobalVar.loclong = Double.parseDouble(longitudeText.getText().toString());
+                            resultText.setText("New Coordinates Set:\n");
+                            resultText.append("Latitude:  " + String.valueOf(GlobalVar.loclat) + "\n");
+                            resultText.append("Longitude: " + String.valueOf(GlobalVar.loclong) + "\n");
+                        }
+                        catch (NumberFormatException e){
+                            resultText.setText(e.getMessage());
+                        }
+                        try{
+                            changeMarker();
+                        }
+                        catch (NullPointerException e){
+                            resultText.setText(e.getMessage());
+                        }
                     }
                 }
         );
@@ -56,13 +76,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void changeMarker(){
-        GoogleMap googleMap = null;
-        MarkerOptions a = new MarkerOptions()
-                .position(new LatLng(GlobalVar.loclat, GlobalVar.loclong));
-        Marker m = googleMap.addMarker(a);
-        m.setPosition(new LatLng(GlobalVar.loclat, GlobalVar.loclong));
         LatLng device = new LatLng(GlobalVar.loclat, GlobalVar.loclong);
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(device));
+        rescuer.setPosition(device);
     }
 
     @Override
@@ -72,10 +87,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         //      North               South
         //      East                West
         //Example: 1°North 1°West is equal to (1, -1)
-        LatLng device = new LatLng(14.6221, 121.0860);
-        googleMap.addMarker(new MarkerOptions().position(device)
-                .title("Marker to Device"));
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(device));
+        LatLng lrt = new LatLng(14.6155575, 121.0814098);
+        MarkerOptions marker = new MarkerOptions().position(lrt).title("Marker in LRT");
+        rescuer = googleMap.addMarker(marker);
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(lrt));
     }
 
     @Override
@@ -94,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_favorite) {
-            Toast.makeText(MainActivity.this, "Action clicked", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, "Menu clicked", Toast.LENGTH_LONG).show();
             return true;
         }
 
