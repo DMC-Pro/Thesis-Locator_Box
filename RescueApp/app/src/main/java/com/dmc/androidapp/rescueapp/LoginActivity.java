@@ -1,6 +1,5 @@
 package com.dmc.androidapp.rescueapp;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -30,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
         usernameTextField = findViewById(R.id.editText);
         passwordTextField = findViewById(R.id.editText2);
         resultTextView = findViewById(R.id.textView2);
-        
+
         findViewById(R.id.button).setOnClickListener(
                 new View.OnClickListener()
                 {
@@ -48,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
             final StringBuilder builder = new StringBuilder();
             try {
-                Document doc = Jsoup.connect("http://192.168.8.100/thesis/conn/")
+                Document doc = Jsoup.connect("http://192.168.8.101/thesis/conn/")
                         .data("user", params[0])
                         .data("pass", params[1])
                         .userAgent("Mozilla")
