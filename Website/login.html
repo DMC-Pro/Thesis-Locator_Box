@@ -1,19 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="C:/Users/weng/Desktop/Thesis/res/login.css" />
+	<link rel="stylesheet" type="text/css" href="C:/Users/weng/Desktop/main folder/res/login.css" />
+	<script>
+		function validateForm() 
+		{var x= document.forms["myForm"]["user"].value;
+		var y= document.forms["myForm"]["pass"].value;
+		if (x=="" && y=="") {
+		alert("Please fill out form");
+       		 return false;}
+		else if (x=="") {
+		alert("Username must be filled out");
+        	return false;}
+		else if (y=="") {
+		alert("Password must be filled out");
+        	return false;}
+		}
+	</script>
 </head>
 <body>
 <div id="maindiv">
 	<div id="div2" align="center">
-		<form> 
+		<form method="post" name="myForm" onsubmit="return validateForm()" action="C:/Users/weng/Desktop/main folder/index.html"> 
 			</p>
-			<label for="user">Username:</label>
-			<input name="user" type="text" value=""/></p>
-			<label for="pass">Password:</label>
-			<input name="pass" type="password" value=""/></p>
+			Username:<input name="user" type="text" value=""/></p>
+			Password:<input name="pass" type="password" value=""/></p>
+			<button name="log" type="submit">Login</button></p>
 		</form>
-		<button name="log">Login</button></p>
 	</div>
 </div>
 </body>
