@@ -21,6 +21,7 @@
 <body>
 <div id="maindiv">
 	<div id="div2" align="center">
+		<img src="http://localhost/thesis/res/logo.png" id="logo" height="50px" width="50px">
 		<form method="get" name="myForm" onsubmit="return validateForm()" action="http://localhost/thesis/login2.php"> 
 			</p>
 			Username:<input name="user" type="text" value=""/></p>
