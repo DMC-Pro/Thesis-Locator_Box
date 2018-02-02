@@ -18,6 +18,18 @@
 		}
 	</script>
 	<?php
+	function curPageURL() 
+		{$pageURL = 'http';
+		$pageURL .= "://";
+			if ($_SERVER["SERVER_PORT"] != "80") 
+			{$pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];}
+			else {$pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];}
+		return $pageURL;}
+	
+	$result = curPageURL();
+	if ($result=="http://localhost/thesis/login2.php")
+		{header("location:http://localhost/thesis/login.php");}
+	
 		$dbhost = "localhost";
 		$dbuser = "root";
 		$dbpass = "lifeboxthesis2018";
@@ -26,6 +38,16 @@
 		$conn = new mysqli ($dbhost, $dbuser, $dbpass, $dbname);		
 		if ($conn->connect_error) 
 			{die("Connection failed: " . $conn->connect_error);} 
+	?>
+</head>
+<body>
+<div id="maindiv">
+	<div id="div2" align="center">
+		<form method="get" name="myForm" onsubmit="return validateForm()" action="http://localhost/thesis/login2.php"> 
+			</p>
+			Username:<input name="user" type="text" value=""/></p>
+			Password:<input name="pass" type="password" value=""/></p>
+		<?php
 		$user = $_GET["user"];
 		$pass = $_GET["pass"];
 		$query = "SELECT username, password FROM users";
@@ -45,20 +67,11 @@
 				{$count=$count+1;}
 				if ($count == $result->num_rows)
 				{echo '<p id="alert">'.'User not found.'.'</p>';
-				break;}
+				break;}}
 			}
-		}
+		$conn->close();
+		?>
 
-	$conn->close();
-	?>
-</head>
-<body>
-<div id="maindiv">
-	<div id="div2" align="center">
-		<form method="get" name="myForm" onsubmit="return validateForm()" action="http://localhost/thesis/login2.php"> 
-			</p>
-			Username:<input name="user" type="text" value=""/></p>
-			Password:<input name="pass" type="password" value=""/></p>
 			<button name="log" type="submit">Login</button></p>
 		</form>
 	</div>
