@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -19,6 +20,8 @@ public class LoginActivity extends AppCompatActivity {
 
     EditText usernameTextField;
     EditText passwordTextField;
+    EditText localhostwifi;
+    ProgressBar loading;
     private TextView resultTextView;
 
     @Override
@@ -30,24 +33,46 @@ public class LoginActivity extends AppCompatActivity {
         passwordTextField = findViewById(R.id.editText2);
         resultTextView = findViewById(R.id.textView2);
 
+        loading = findViewById(R.id.progressBar3);
+        loading.setVisibility(View.INVISIBLE);
+
+        localhostwifi = findViewById(R.id.editText3);
+        GlobalVar.localhostwifi = localhostwifi.getText().toString();
+
         findViewById(R.id.button).setOnClickListener(
                 new View.OnClickListener()
                 {
                     public void onClick(View view)
                     {
+                        resultTextView.setText("");
+                        loading.setVisibility(View.VISIBLE);
+                        GlobalVar.localhostwifi = localhostwifi.getText().toString();
                         new Login().execute(usernameTextField.getText().toString(),
                                                 passwordTextField.getText().toString());
+                    }
+                }
+        );
+
+        findViewById(R.id.button2).setOnClickListener(
+                new View.OnClickListener()
+                {
+                    public void onClick(View view)
+                    {
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
                     }
                 }
         );
     }
 
     private class Login extends AsyncTask<String, Void, String> {
+
         @Override
         protected String doInBackground(String... params) {
             final StringBuilder builder = new StringBuilder();
             try {
-                Document doc = Jsoup.connect("http://192.168.8.101/thesis/conn/")
+                Document doc = Jsoup.connect( "http://" + GlobalVar.localhostwifi + "/thesis/conn/")
                         .data("user", params[0])
                         .data("pass", params[1])
                         .userAgent("Mozilla")
@@ -84,6 +109,7 @@ public class LoginActivity extends AppCompatActivity {
                 GlobalVar.error = e.getMessage();
             }
             super.onPostExecute(result);
+            loading.setVisibility(View.INVISIBLE);
             if(GlobalVar.message.equals("error")){
                 resultTextView.setText(GlobalVar.error);
             }

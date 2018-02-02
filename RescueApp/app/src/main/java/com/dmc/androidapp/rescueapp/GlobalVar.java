@@ -11,8 +11,10 @@ public class GlobalVar {
     public static String password;
     public static String message = "none";
     public static String error = "none";
+    public static double loclat = 14.6221;
+    public static double loclong = 121.0860;
     public static String rescue_team_name;
     public static String rescue_team_current_task;
-    public static String localhostwifi = "http://192.168.8.100/thesis/conn/";
+    public static String localhostwifi = "192.168.8.100";
     public static JSONObject jsonObj;
 }
