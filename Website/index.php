@@ -7,7 +7,7 @@
 		function drop3() {document.getElementById("dropdown3").classList.toggle("show");}
 	
 		function initMap() {
-        var uluru = {lat: -25.363, lng: 131.044};
+        var uluru = {lat: 14.5979292, lng: 121.01075560000004};
         var map = new google.maps.Map(document.getElementById('center'), {
           zoom: 18,
           center: uluru
