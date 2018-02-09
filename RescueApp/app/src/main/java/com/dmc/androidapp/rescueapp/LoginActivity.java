@@ -73,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
             final StringBuilder builder = new StringBuilder();
             try {
                 Document doc = Jsoup.connect( "http://" + GlobalVar.localhostwifi + "/thesis/conn/")
+                        .data("action", "login")
                         .data("user", params[0])
                         .data("pass", params[1])
                         .userAgent("Mozilla")
@@ -114,6 +115,7 @@ public class LoginActivity extends AppCompatActivity {
                 resultTextView.setText(GlobalVar.error);
             }
             else if(GlobalVar.message.equals("success")) {
+                GlobalVar.RescuerUsername = usernameTextField.getText().toString();
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
