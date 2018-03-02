@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html>
-<body>
+
 <?php
 	$dbhost = "localhost";
 	$dbuser = "root";
