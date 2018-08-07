@@ -1,0 +1,106 @@
+html,body{ margin:0; padding:0; height:100%; width:100%; }
+
+.bg-color {
+	 background-color:#17322b;
+	 background-repeat: no-repeat;
+  	 background-attachment: fixed;
+     background-position: center center; 
+     background-size: 100%;
+}
+
+.logo-center {
+	margin: auto;
+    width: 80%;
+    padding: 50% 0;
+}
+
+.logo-center-2 {
+	margin: auto;
+    width: 75%;
+    padding: 20% 0;
+}
+
+.login-bg {
+	background: url('../img/bg.png');
+	 background-repeat: no-repeat;
+  	 background-attachment: fixed;
+     background-position: center center; 
+     background-size: 100%;
+
+
+}
+
+.bgless {
+	background-color: transparent;
+	border-width: large;
+    color: white;
+}
+
+.title-head {
+	text-align: center;
+	color: white;
+	padding: 3%;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.shdw {
+    box-shadow: 2px 2px 4px #0f0f0f;
+} 
+.announcement {
+}
+
+.border-try {
+	border: 
+}
+
+.carousel {
+  width: auto;
+  max-width: 900px !important;
+  max-height: 600px !important;
+}
+
+.menu_carousel{
+	margin-top: 2%;
+}
+
+.menu_logo{
+    margin-left: 38%;
+    margin-top: 2%;
+}
+
+.menu_scroll{
+	overflow-y:hidden;
+	position: fixed;
+}
+
+.panel{
+	max-height: 200px;	
+	margin-bottom: 30px !important;
+
+}
+
+
+.border-try {
+	position: fixed;
+   	top: 45%;
+   	left: 70%;
+   	transform: translate(-50%, -50%);
+}
+
+
+.btn-clr {
+	background-color: #17322b;
+	color: #fff;
+	padding: 10px 15px;
+}
+.forgot {
+	color: #fff;
+}
+
+.cardlist {
+	margin-top: 70%;
+	margin-left: 10%;
+}

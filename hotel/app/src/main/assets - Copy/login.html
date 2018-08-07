@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	  	<title> The Linden Suite </title>
+
+	  	<meta charset="utf-8">
+	  	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	  	<link rel="stylesheet" type="text/css" href="public/css/bootstrap.min.css" />
+	  	<link rel="stylesheet" type="text/css" href="public/css/style.css" />
+		<script src="public/js/jquery-3.3.1.js"></script>
+	</head>
+
+	<body class="login-bg">
+		<div class="row; logo-center-2">
+			<img src="public/img/logo.png" class="img-responsive" alt="Cinque Terre">
+		</div>
+		<div class="row">
+			<div class="col-xs-2"> </div>
+			<div class="col-xs-8">
+				    <div class="form-group">
+				      	<input type="email" class="form-control bgless" id="email" placeholder="Enter email" name="email">
+				    </div>
+				    <div class="form-group">
+				      	<input type="password" class="form-control bgless" id="password" placeholder="Enter password" name="pwd">
+				    </div>
+				    <button onclick="login()"  class="btn btn-default btn-block">Submit</button>
+				    <div class="checkbox">
+				      	<button class="btn btn-link btn-block"> forgot password? </button>
+				    </div>
+			</div>
+			<div class="col-xs-2"> </div>
+		</div>
+
+		<script lang="text/javascript">
+	function login(){
+	var email = $("input[type='email']").val();
+	var password = $("input[type='password']").val();
+	$.ajax({
+		type: 'POST',
+		url: 'http://192.168.43.156:3000/api/user/login',
+		dataType: 'json',
+		data: {
+			"email" : email,
+			"password" : password
+		},
+		success: function(data) {
+			console.log(data.result);
+			if(data.result == "success"){
+				$(location).attr("href", "menu.html");
+				try {
+					window.sessionStorage.setItem("user_id", data.user_id);
+					window.sessionStorage.setItem("room", 404);
+					window.sessionStorage.setItem("user_fullname", data.fullname);
+				} catch (e) {}
+			}
+			else{
+				alert("Wrong email and/or password");
+			}
+		}
+	});
+	}
+		</script>
+	</body>
+</html> 

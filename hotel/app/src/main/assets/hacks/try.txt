@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="jquery-3.3.1.js"></script>
+	<style>
+		.cardview{
+			padding:10px;
+			margin:10px;
+			background-color:blue;
+		}
+	</style>
+</head>
+<body>
+
+<div class="container">
+  <button onclick="login()">query</button>
+  <div id="listview">
+  </div>
+</div>
+		<script lang="text/javascript">
+	function login(){
+	var email = $("input[name='email']").val();
+	var password = $("input[name='password']").val();
+	$.ajax({
+		type: 'POST',
+		url: 'http://10.1.130.73:3000/api/foods_and_beverages/showCategories',
+		dataType: 'json',
+		data: {
+			"type" : "Beverage"
+		},
+		success: function(data) {
+			$.each(data, function (index, item) {
+				$("#listview").append("<div class='cardview'>" + item.name + "</div>");
+				console.log(item.name);
+			});
+		}
+	});
+	}
+		</script>
+</body>
+</html> 

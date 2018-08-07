@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list android:oneshot="true"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:duration="1" android:drawable="@drawable/mtk_voice_wave_0" />
+    <item android:duration="50" android:drawable="@drawable/mtk_voice_wave_1" />
+    <item android:duration="70" android:drawable="@drawable/mtk_voice_wave_2" />
+    <item android:duration="90" android:drawable="@drawable/mtk_voice_wave_3" />
+    <item android:duration="150" android:drawable="@drawable/mtk_voice_wave_4" />
+    <item android:duration="30" android:drawable="@drawable/mtk_voice_wave_3" />
+    <item android:duration="30" android:drawable="@drawable/mtk_voice_wave_2" />
+    <item android:duration="30" android:drawable="@drawable/mtk_voice_wave_1" />
+    <item android:duration="5" android:drawable="@drawable/mtk_voice_wave_0" />
+</animation-list>

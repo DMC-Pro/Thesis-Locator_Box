@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+	<?php 
+			$ipAdd = "http://10.1.130.77:8080/madhacks/";
+			$imageAdd = "http://10.1.130.77:8080/madhacks/public/img/"
+	 ?>
+<html lang="en">
+	<head>
+	  <title> The Linden Suite </title>
+
+	  <meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	  <meta name="apple-mobile-web-app-capable" content="yes"/>
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0 , maximum-scale=1.0 , user-scalable=no" />
+	 <link rel="stylesheet" type="text/css" href="public/css/style.css" />
+     <script type="text/javascript" href="public/js/jquery-3.3.1.js"></script>
+ 	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	  <link rel="apple-touch-icon" href="<?php echo $imageAdd?>/PUP.png">
+	  <link rel="shortcut icon" href="<?php echo $imageAdd?>/PUP.png">
+
+	</head>
+
+	<body class="login-bg">
+		<div class="border-try">
+			<div class="row; logo-center-2 ">
+				<img src="public/img/logo.png" class="img-responsive" >
+			</div>
+			<div class="row">
+				<div class="col-xs-1"> </div>
+				<div class="col-xs-10">
+					<form>
+					    <div class="form-group">
+					      	<input type="email" class="form-control input-lg bgless border border-white" id="email" placeholder="Enter email" name="email">
+					    </div>
+					    <div class="form-group">
+					      	<input type="password" class="form-control input-lg bgless border border-white" id="password" placeholder="Enter password" name="pwd">
+					    </div>
+					    <button type="submit" class="btn btn-default btn-lg  btn-clr btn-block">Submit</button>
+					    <div class="checkbox">
+					      	<button type="submit" class="btn btn-link  btn-block"> <h4 class="forgot"> forgot password? </h4></button>
+					    </div>
+					</form>
+				</div>
+				<div class="col-xs-1"> </div>
+			</div>
+		</div>
+	</body>
+</html> 

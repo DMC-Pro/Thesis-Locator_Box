@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	  <title> The Linden Suite </title>
+
+	  <meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	  <link rel="stylesheet" type="text/css" href="public/css/bootstrap.min.css" />
+	  <link rel="stylesheet" type="text/css" href="public/css/style.css" />
+	  
+<script src="public/js/jquery-3.3.1.js"></script>
+
+	</head>
+
+	<body class="bg-color">
+		<div class="title-head">
+			<h1> Services </h1> 
+		</div>
+		<div id="listview">
+		</div>
+		<script lang="text/javascript">
+$(document).ready(function() {
+	$.ajax({
+		type: 'POST',
+		url: 'http://10.1.130.73:3000/api/foods_and_beverages/showRestau',
+		dataType: 'json',
+		success: function(data) {
+			$.each(data, function (index, item) {
+				$("#listview").append("<div class='cardview'>" + item.name + "</div>");
+				console.log(item.name);
+			});
+		}
+	});
+	
+				console.log(window.sessionStorage.getItem("user_id"));
+				console.log(window.sessionStorage.getItem("room"));
+				console.log(window.sessionStorage.getItem("user_fullname"));
+});
+		</script>
+	</body>
+</html> 

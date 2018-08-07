@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	  <title> The Linden Suite </title>
+
+	  <meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	  <meta name="apple-mobile-web-app-capable" content="yes"/>
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0 , maximum-scale=1.0 , user-scalable=no" />
+	 <link rel="stylesheet" type="text/css" href="public/css/style.css" />
+     <script type="text/javascript" href="jquery.session.js"></script>
+     <script type="text/javascript" href="public/js/jquery-3.3.1.js"></script>
+ 	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	  <link rel="apple-touch-icon" href="http://10.1.130.77:8080/madhacks/public/img/PUP.png">
+	  <link rel="shortcut icon" href="http://10.1.130.77:8080/madhacks/public/img/PUP.png">
+	  
+	  <link rel="stylesheet" type="text/css" href="public/css/bootstrap.min.css" />
+	  <link rel="stylesheet" type="text/css" href="public/css/style.css" />
+
+	<body class="bg-color">
+		<div class="container cart-bg shdw">
+			<table id="cart" class="table table-hover table-condensed">
+			    <thead>
+			      	<tr>
+				        <th style="width:50%">Product</th>
+				        <th style="width:10%">Price</th>
+				        <th style="width:8%">Quantity</th>
+				        <th style="width:22%" class="text-center">Subtotal</th>
+				        <th style="width:10%"></th>
+			      	</tr>
+			    </thead>
+			    <tbody id="listview">
+			    </tbody>
+			    <tfoot>
+			      	<tr class="visible-xs">
+			        	<td class="text-center"><strong>Total 0.00</strong></td>
+			      	</tr>
+				    <tr>
+				        <td><a href="#" class="btn "><i class="fa fa-angle-left"></i> Back to menu</a></td>
+				        <td colspan="2" class="hidden-xs"></td>
+				        <td class="hidden-xs text-center"><strong id="total">Total 0.00</strong></td>
+				        <td><button onclick="order()" type="button" class="btn btn-primary btn-lg " id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Processing Order">Submit Order</button>
+							<br>
+						</td>
+				    </tr>
+			    </tfoot>
+			</table>
+			<div class="form-group">
+			  	<label for="comment">Note:</label>
+			  	<textarea class="form-control" rows="5" id="comment"></textarea>
+			</div>
+		</div>
+	<script lang="text/javascript">
+	//<!--
+	//cart variable
+	//var cart = [];
+	var totalprice = 0;
+	var cart;
+	
+$(document).ready(function() {
+	cart = JSON.parse(window.sessionStorage.getItem("cart"));
+    $.each(cart, function(index, food) {
+		$("#listview").append('<tr id="tablerow-' + food.id + '"></tr>');
+		$("#tablerow-" + food.id).append('\
+			        	<td data-th="Product">\
+				          	<div class="row">\
+					            <div class="col-sm-2 hidden-xs"><img src="http://placehold.it/100x100" alt="..." class="img-responsive" /></div>\
+					            <div class="col-sm-10">\
+					              	<h4 class="nomargin">' + food.name + '</h4>\
+					            </div>\
+				          	</div>\
+			        	</td>\
+		');
+		$("#tablerow-" + food.id).append('\
+				        <td data-th="Price">' + food.price + ' php</td>\
+		');
+		$("#tablerow-" + food.id).append('\
+				        <td data-th="Quantity">\
+				          	<input id="quantity-' + food.id + '" type="number" onchange="subtotal(' + food.id + ', \'' + food.name + '\', ' + food.price + ')" class="form-control text-center" value="' + food.quantity + '">\
+				        </td>\
+		');
+		$("#tablerow-" + food.id).append('\
+				        <td id="subtotal-' + food.id + '" data-th="Subtotal" class="text-center subtotal">' + food.price * food.quantity + '</td>\
+		');
+		$("#tablerow-" + food.id).append('\
+				        <td class="actions" data-th="">\
+				          	<button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"> remove</i></button>\
+				        </td>\
+		');
+		totalprice += food.quantity * food.price;
+	});
+	total();
+});
+
+function subtotal(id, input, price){
+	totalprice += ($("#quantity-" + id).val() * price) - ($("#subtotal-" + id).text());
+	var subtotal = $("#quantity-" + id).val() * price;
+	$("#subtotal-" + id).text(subtotal);
+	cart[id-1].quantity = $("#quantity-" + id).val();
+	console.log(cart);
+	total();
+}
+
+function total(){
+	$("#total").text("Total " + totalprice);
+}
+
+function order(){
+	var i = 0;
+	
+	$.each(cart, function(i, item) {
+		//console.log(item.name);
+		//var user_id = window.sessionStorage.getItem("user_id");
+		var user_id = "1";
+		var note = $("form-control").val();
+		$.ajax({
+			type: 'POST',
+			url: 'http://192.168.43.156:3000/api/foods_and_beverages/order',
+			dataType: 'json',
+			data: {
+				"item" 			: item.name,
+				"user_id"		: user_id,
+				"room_number"	: "404",
+				"status"		: "ON QUEUE",
+				"quantity"		: item.quantity,
+				"total_price"	: item.quantity * item.price,
+				"note"			: note
+			},
+			success: function(data) {
+				console.log(data);
+			}
+		});
+	});
+}
+//-->
+</script>
+	</body>
+</html> 

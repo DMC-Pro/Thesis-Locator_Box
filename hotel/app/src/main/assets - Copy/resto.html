@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	  <title> The Linden Suite </title>
+
+	  <meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	  <meta name="apple-mobile-web-app-capable" content="yes"/>
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0 , maximum-scale=1.0 , user-scalable=no" />
+	 <link rel="stylesheet" type="text/css" href="public/css/style.css" />
+     <script type="text/javascript" href="jquery.session.js"></script>
+     <script type="text/javascript" href="public/js/jquery-3.3.1.js"></script>
+ 	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	  <link rel="apple-touch-icon" href="http://10.1.130.77:8080/madhacks/public/img/PUP.png">
+	  <link rel="shortcut icon" href="http://10.1.130.77:8080/madhacks/public/img/PUP.png">
+	  
+	  <link rel="stylesheet" type="text/css" href="public/css/bootstrap.min.css" />
+	  <link rel="stylesheet" type="text/css" href="public/css/style.css" />
+
+	</head>
+
+	<body class="bg-color">
+		<div id="listview">
+		</div>
+	<script lang="text/javascript">
+	//<!--
+$(document).ready(function() {
+	$.ajax({
+		type: 'POST',
+		url: 'http://10.1.130.73:3000/api/foods_and_beverages/showRestau',
+		dataType: 'json',
+		success: function(data) {
+			console.log(data);
+			$.each(data, function (index, item) {
+				$("#listview").append('\
+				<div class="col-md-4 ">\
+					<div class="card cardlist" style="width: 75%;">\
+						<img onclick="gotoProducts(' + item.id + ')" class="card-img-top" src="http://10.1.130.73:3000' + item.image.url + '" alt="Card image cap">\
+						<div class="card-body">\
+							<h5 class="card-title">' + item.name + '</h5>\
+						</div>\
+					</div>\
+				</div>\
+				');
+				console.log(item.name);
+			});
+		}
+	});
+});
+function gotoProducts(id){
+    try {
+        window.sessionStorage.setItem("id", id);
+    } catch (e) {}
+	$(location).attr("href", "products.html");
+}
+//-->
+</script>
+	</body>
+</html> 
+

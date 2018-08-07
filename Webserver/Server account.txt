@@ -1,0 +1,5 @@
+mysql account on server
+username:
+root
+password:
+libolobo

@@ -1,0 +1,95 @@
+
+
+In this tutorial we will show you how to connect your Raspberry Pi to a 3G network using the Itead Raspberry Pi GSM Board (SIM800). This breakout board communicates to the Pi over serial, but as we know the serial ports of the Pi are initally already in use, so we will need to do a bit of jiggery pokery to free up the serial ports.
+
+Free up your serial ports
+
+First we need to edit the /boot/config.txt file
+
+sudo nano /boot/config.txt
+
+Add the following lines
+
+dtoverlay=pi3-miniuart-bt
+enable_uart=1
+force_turbo=1
+
+Now we need to edit the /boot/cmdline.txt file
+
+sudo nano /boot/cmdline.txt
+
+Remove all references of "console=", for example, if the line reads:
+
+dwc_otg.lpm_enable=0 console=serial0,115200 console=tty1 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait
+
+Change it to:
+
+dwc_otg.lpm_enable=0 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait
+
+Next, we need to edit the /lib/systemd/system/hciuart.service file:
+
+sudo nano /lib/systemd/system/hciuart.service
+
+Comment out the After= line (by adding the # symbol at the begining of the line) and add the following on a new line
+
+After = dev-ttyS0.device
+
+Comment out the ExecStart= line (by adding the # symbol at the begining of the line) and add the following on a new line
+
+ExecStart = /usr/lib/hciattach /dev/ttyS0 bcm43xx 460800 noflow -
+
+end of releasing serial port
+
+Update your RPi
+
+Make sure your raspberry pi is fully up to date by running these commands:
+
+sudo apt-get update
+sudo apt-get upgrade
+sudo rpi-update
+sudo reboot
+
+ 
+
+Installing the required software
+
+Start by installing the ppp package
+
+sudo apt-get install ppp
+
+Now we can install a piece of software called sakis3g. Its a really easy to use program that'll allow you to connect to your GSM provider.
+
+Start by downloading the Sakis3g package
+
+sudo wget "https://www.modmypi.com/download/sakis3g.tar.gz" -O sakis3g.tar.gz
+
+The extract the file
+
+sudo tar -xzvf sakis3g.tar.gz
+
+Make the extracted file executable
+
+sudo chmod +x sakis3g
+
+Before we can run the software we need to create a configuration file for it
+
+sudo nano /etc/sakis3g.conf
+
+Then add the following lines
+
+CUSTOM_TTY="/dev/ttyAMA0"
+BAUD=9600
+
+Now we can load up the sakis3g software in interactive mode
+
+sudo ./sakis3g --interactive
+
+From there its just a simple case of:
+
+Selecting "Connect 3G"
+
+Select "Custom tty..." (this then uses the CUSTOM_TTY value from our config file, and also sets the correct baud rate)
+
+Select the correct APN from the list or manully enter the details.
+
+You should now be connected to the GSM network!

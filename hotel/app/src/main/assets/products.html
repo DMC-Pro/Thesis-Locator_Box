@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	  <title> The Linden Suite </title>
+
+	  <meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	  <meta name="apple-mobile-web-app-capable" content="yes"/>
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0 , maximum-scale=1.0 , user-scalable=no" />
+	 <link rel="stylesheet" type="text/css" href="public/css/style.css" />
+     <script type="text/javascript" href="jquery.session.js"></script>
+     <script type="text/javascript" href="public/js/jquery-3.3.1.js"></script>
+ 	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	  <link rel="apple-touch-icon" href="http://10.1.130.77:8080/madhacks/public/img/PUP.png">
+	  <link rel="shortcut icon" href="http://10.1.130.77:8080/madhacks/public/img/PUP.png">
+	  
+	  <link rel="stylesheet" type="text/css" href="public/css/bootstrap.min.css" />
+	  <link rel="stylesheet" type="text/css" href="public/css/style.css" />
+
+	</head>
+
+	<body class="bg-color">
+			<nav class="navbar nav-color navbar-default">
+			    <div class="container-fluid">
+			      	<div class="brand-centered">
+			      		<img class="navbar-brand" style="margin-right: 10px; padding: 0;" src="public/img/logo.png" alt="Dispute Bills">
+			      	</div>
+			      
+				    <div id="navbar9" class="navbar-collapse collapse">
+				        <ul class="nav navbar-nav navbar-left">
+				          	<li><a href="#" id="resto" onclick="document.location=this.id+'.html';return false;" >Back</a></li>
+				        </ul>
+				        <ul class="nav navbar-nav navbar-right">
+				          	<li><a href="#">Status</a></li>
+				        </ul>
+				    </div>
+			    </div>
+		  	</nav>
+			
+		<div class="menu_logo">
+			<img src="http://10.1.130.77:8080/madhacks/public/img/logo.png" width="300px" height="150px">
+		</div>
+
+	<div id="listview" class="food_list"></div>
+
+	<button onclick="checkout()">Checkout</button>
+	<script lang="text/javascript">
+	//<!--
+	//cart variable
+	var cart = [];
+	var row = 1;
+	
+$(document).ready(function() {
+	var id = window.sessionStorage.getItem("id");
+	$.ajax({
+		type: 'POST',
+		url: 'http://192.168.43.156:3000/api/foods_and_beverages/showProducts',
+		dataType: 'json',
+		data: {
+			"restaurant_id" : id
+		},
+		success: function(data) {
+			console.log(data);
+            $.each(data.food_category, function(index, food_category) {
+				$("#listview").append('\
+					<div class="panel panel-primary">\
+						<div class="panel-heading">\
+							<h1 class="text-center text-uppercase">' + food_category.name + '</h1>\
+						</div>\
+						<div id="' + food_category.name + '" class="panel-body"></div>\
+					</div>\
+					');
+				$.each(data.food, function(index, food) {
+					if(food.food_category_id == food_category.id){
+						$("#" + food_category.name).append('\
+							<div class="col-xs-4">\
+								<img class="prodImg" src="http://10.1.130.73:3000' + food.image.url + '"></img>\
+								<div class="col-xs-4">\
+									<div class="row">\
+										<label >' + food.name + '</label>\
+									</div>	\
+								<div class="row">\
+									<button onclick="addToCart(\'' + food.name + '\', ' + food.price + ')">Add to cart</button>\
+								</div>	\
+						');
+					}
+				});
+			});
+            $.each(data.beverage_category, function(index, beverage_category) {
+				$("#listview").append('\
+					<div class="panel panel-primary">\
+						<div class="panel-heading">\
+							<h1 class="text-center text-uppercase">' + beverage_category.name + '</h1>\
+						</div>\
+						<div id="' + beverage_category.name + '" class="panel-body"></div>\
+					</div>\
+					');
+				$.each(data.beverage, function(index, beverage) {
+					if(beverage.beverages_category_id == beverage_category.id){
+						$("#" + beverage_category.name).append('\
+							<div class="col-xs-4">\
+								<img class="prodImg" src="http://10.1.130.73:3000' + beverage.image.url + '"></img>\
+								<div class="col-xs-4">\
+									<div class="row">\
+										<label>' + beverage.name + '</label>\
+									</div>\
+									<div class="row">\
+							<button onclick="addToCart(\'' + beverage.name + '\', ' + beverage.price + ')">Add to cart</button>\
+								</div>	\
+						');
+					}
+				});
+			});
+		}
+	});
+});
+function addToCart(food_name, food_price, image_url){
+	item = {"id" : row, "name" : food_name, "price" : food_price, "quantity" : 1, "image" : image_url};
+	cart.push(item);
+	alert("Added to cart");
+	console.log(cart);
+	row++;
+}
+function checkout(){
+	try{
+		window.sessionStorage.setItem("cart", JSON.stringify(cart));
+	} catch(e){}
+	$(location).attr("href", "cart.html");
+}
+
+
+//-->
+</script>
+
+	</body>
+</html> 
+

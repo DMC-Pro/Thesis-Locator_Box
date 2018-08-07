@@ -1,0 +1,28 @@
+
+	$.ajax({
+		type: 'POST',
+		url: 'http://10.1.130.73:3000/api/foods_and_beverages/showProducts',
+		dataType: 'json',
+		data: {
+			"restaurant_id" : id
+		},
+		success: function(data) {
+			console.log(data);
+                $.each(data.food_category, function(index, food_category) {
+					$("#listview").append('<div>' + food_category.name + '</div>');
+					$.each(data.food, function(index, food) {
+						if(food.food_category_id == food_category.id){
+							$("#listview").append('<div>\
+								<button onclick="addToCart(\'' + food.name + '\', ' + food.price +')">Add to cart</button>\
+								' + food.name + '\
+								</div>\
+							');
+						}
+					});
+			});
+		},
+		complete: function() {
+			// Schedule the next request when the current one's complete
+			setTimeout(worker, 5000);
+		}
+	});
